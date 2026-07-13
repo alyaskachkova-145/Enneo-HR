@@ -4,6 +4,7 @@
 // Every "message" is logged to the console formatted like a Slack post, and
 // also returned to the caller so the demo can show it without a live workspace.
 
+// Routes to the employee's assigned approver(s) — usually exactly one.
 function notifyApprovers(approvers, request, employee) {
   const text =
     `:palm_tree: *Holiday request* from *${employee.name}* (${employee.country})\n` +
@@ -16,7 +17,7 @@ function notifyApprovers(approvers, request, employee) {
     console.log(`\n[SLACK → @${approver.name}]\n${text}\n`);
   }
 
-  return { channel: 'dm:approvers', recipients: approvers.map((a) => a.name), text };
+  return { channel: `dm:${approvers.map((a) => a.name).join(', ')}`, recipients: approvers.map((a) => a.name), text };
 }
 
 function notifyDecision(request, employee, approver) {
@@ -47,4 +48,25 @@ function weeklyDigestMessage(outNextWeek, backNextWeek, rangeLabel) {
   return { channel: '#team-updates', text };
 }
 
-module.exports = { notifyApprovers, notifyDecision, weeklyDigestMessage };
+function flag(code) {
+  if (!code || code.length !== 2) return '';
+  return String.fromCodePoint(...[...code.toUpperCase()].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
+}
+
+// Public-holiday awareness: upcoming holidays + who's unavailable by location.
+function holidayAwarenessMessage(upcoming) {
+  const lines = upcoming.length
+    ? upcoming.map((h) => {
+        const who = h.unavailable.length ? h.unavailable.join(', ') : 'nobody based there';
+        return `${flag(h.country)} *${h.holiday_date}* — ${h.name} (${h.country_name})\n   :couch_and_lamp: Unavailable: ${who}`;
+      }).join('\n')
+    : '• no public holidays coming up';
+
+  const text = `:date: *Upcoming public holidays & who's out*\n\n${lines}`;
+
+  console.log(`\n[SLACK → #team-updates]\n${text}\n`);
+
+  return { channel: '#team-updates', text };
+}
+
+module.exports = { notifyApprovers, notifyDecision, weeklyDigestMessage, holidayAwarenessMessage };

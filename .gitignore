@@ -1,3 +1,7 @@
 node_modules/
 .env
 *.log
+
+# Large design-system source bundle (lives as a Claude skill, not in the app)
+Enneo Design System.zip
+design-system/

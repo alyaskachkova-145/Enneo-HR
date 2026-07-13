@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Enneo HR Ops — Sign in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/colors_and_type.css" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: "Inter", var(--font-ui);
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    width: 360px;
+    background: var(--bg-paper);
+    border: 1px solid var(--bg-line);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+  .brand { display: flex; justify-content: center; margin-bottom: 24px; }
+  .brand img { height: 26px; }
+  h1 { font: var(--text-h4); text-align: center; margin-bottom: 4px; }
+  .sub { text-align: center; color: var(--fg-3); font: var(--text-p-s); margin-bottom: 24px; }
+  label { display: block; font: var(--text-p-xs-bold); color: var(--fg-3); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: .04em; }
+  input {
+    width: 100%; height: 40px; border: 1px solid var(--bg-line); border-radius: var(--radius-md);
+    padding: 0 12px; font: var(--text-p-s); color: var(--fg-1);
+  }
+  input:focus { outline: 2px solid var(--fg-1); outline-offset: 2px; }
+  .btn {
+    width: 100%; height: 40px; margin-top: 22px; border: none; border-radius: var(--radius-md);
+    background: var(--primary); color: #fff; font: var(--text-btn); cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); }
+  .btn:disabled { background: var(--bg-soft); color: var(--fg-disabled); cursor: not-allowed; }
+  .error {
+    margin-top: 14px; background: var(--red-soft); color: var(--red);
+    border-radius: var(--radius-md); padding: 8px 12px; font: var(--text-p-xs-med);
+    display: none;
+  }
+</style>
+</head>
+<body>
+  <form class="card" id="login-form">
+    <div class="brand"><img src="/assets/enneo-logo-light.svg" alt="Enneo" /></div>
+    <h1>HR Ops</h1>
+    <div class="sub">Sign in to continue</div>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="username" required />
+
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" required />
+
+    <button class="btn" type="submit">Sign in</button>
+    <div class="error" id="error">Invalid email or password.</div>
+  </form>
+
+<script>
+  const form = document.getElementById('login-form');
+  const errorBox = document.getElementById('error');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.style.display = 'none';
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+    try {
+      const res = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value,
+        }),
+      });
+      if (!res.ok) throw new Error();
+      window.location.href = '/';
+    } catch {
+      errorBox.style.display = 'block';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

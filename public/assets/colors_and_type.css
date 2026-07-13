@@ -1,0 +1,176 @@
+/* ==========================================================================
+   ENNEO DESIGN SYSTEM — COLORS & TYPE
+   Product UI: Inter  (Figma design system)
+   Brand & marketing: Geist + Geist Mono
+   ========================================================================== */
+
+/* --- FONT FACES ----------------------------------------------------------- */
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/Geist-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./fonts/GeistMono-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+/* Inter is loaded via Google Fonts in preview HTML */
+
+:root {
+  /* ========== BRAND COLORS (from Enneo Brand Style Guide v2026-01.3) ===== */
+  --brand-purple: #7B5AE2;          /* Primary brand (Pantone 2665C) */
+  --brand-purple-dark: #613CDD;     /* Hover / pressed state */
+  --brand-purple-300: #957BE8;      /* tint */
+  --brand-purple-200: #B09CEE;      /* tint */
+  --brand-purple-100: #CABDF3;      /* tint */
+  --brand-purple-50:  #E5DEF9;      /* soft background */
+
+  --brand-navy: #292C3F;            /* Primary dark (Pantone 275C) */
+  --brand-navy-700: #545666;
+  --brand-navy-500: #7F808C;
+  --brand-navy-300: #A6ABB2;
+  --brand-navy-200: #D4D5D9;
+  --brand-ink: #181825;             /* deepest ink — dark surfaces */
+
+  --brand-white: #FFFFFF;
+
+  /* Brand accent gradients (grainy in use) */
+  --grad-purple:       linear-gradient(90deg, #7B5AE2 0%, #B09CEE 100%); /* @kind color */
+  --grad-lavender:     linear-gradient(90deg, #E5DEF9 0%, #B09CEE 100%); /* @kind color */
+  --grad-navy-purple:  linear-gradient(90deg, #292C3F 0%, #957BE8 100%); /* @kind color */
+  --grad-purple-pink:  linear-gradient(90deg, #957BE8 0%, #E76F95 100%); /* @kind color */
+  --grad-logo:         linear-gradient(105deg, #B09CEE 0%, #7B5AE2 100%); /* @kind color */
+
+  /* ========== PRODUCT COLORS (from Figma UI) =========================== */
+  /* Base / neutral — warm-cool mixed greys */
+  --fg-1: #292C3F;        /* primary text */
+  --fg-2: #26233A;        /* alt-dark ink */
+  --fg-3: #7B7986;        /* muted text */
+  --fg-4: #7D7B89;        /* muted alt */
+  --fg-muted: #A8A7B0;    /* tertiary */
+  --fg-disabled: #B0AFB6;
+
+  --bg-paper: #FFFFFF;
+  --bg-alt: #F8F7F9;       /* subtle surface */
+  --bg-soft: #EDEBEF;      /* card, rail */
+  --bg-line: #D4CFD8;      /* borders */
+  --bg-line-2: #CECDCF;    /* divider */
+  --bg-dark: #181825;      /* dark surface */
+  --bg-black: #212529;
+
+  /* Primary (product) — matches Figma primary = purple */
+  --primary: #7B5AE2;
+  --primary-hover: #613CDD;
+  --primary-soft: #E5DEF9;
+  --primary-soft-2: #CABDF3;
+
+  /* Semantic palette (Figma) */
+  --green: #38A870;
+  --green-soft: #EBFBF4;
+  --green-200: #72E2A6;
+  --green-300: #BEE3D0;
+
+  --red: #DB5151;
+  --red-soft: #FDECEC;
+
+  --yellow: #F6B100;
+  --yellow-soft: #FEFAE9;
+  --yellow-200: #F9E073;
+  --yellow-300: #FBE7A5;
+
+  --blue: #6F91ED;
+  --blue-hover: #537BE9;
+
+  --ai-purple: #9747FF;    /* AI accent */
+
+  /* ========== SPACING / RADII / SHADOWS ================================ */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;         /* default button, card */
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  --shadow-xs: 0 1px 2px rgba(41, 44, 63, 0.06);
+  --shadow-sm: 0 1px 3px rgba(41, 44, 63, 0.08), 0 1px 2px rgba(41, 44, 63, 0.04);
+  --shadow-md: 0 4px 12px rgba(41, 44, 63, 0.08), 0 2px 4px rgba(41, 44, 63, 0.04);
+  --shadow-lg: 0 16px 40px rgba(41, 44, 63, 0.12), 0 6px 12px rgba(41, 44, 63, 0.06);
+  --shadow-purple: 0 12px 32px rgba(123, 90, 226, 0.24);
+  --shadow-focus: 0 0 0 1px var(--fg-1);
+
+  /* ========== TYPOGRAPHY TOKENS ======================================== */
+  --font-brand: "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-ui: "Inter", system-ui, sans-serif;
+
+  --text-h1: 700 40px/48px var(--font-ui);
+  --text-h2: 700 32px/40px var(--font-ui);
+  --text-h3: 700 24px/32px var(--font-ui);
+  --text-h4: 700 20px/28px var(--font-ui);
+
+  --text-p:         400 16px/24px var(--font-ui);
+  --text-p-bold:    700 16px/24px var(--font-ui);
+  --text-p-s:       400 14px/20px var(--font-ui);
+  --text-p-s-med:   500 14px/20px var(--font-ui);
+  --text-p-s-bold:  600 14px/20px var(--font-ui);
+  --text-p-xs:      400 12px/16px var(--font-ui);
+  --text-p-xs-med:  500 12px/16px var(--font-ui);
+  --text-p-xs-bold: 600 12px/16px var(--font-ui);
+  --text-caption:   500 10px/14px var(--font-ui);
+
+  --text-btn:       700 14px/20px var(--font-ui);
+  --text-btn-s:     700 12px/16px var(--font-ui);
+
+  --text-code:      400 14px/20px var(--font-mono);
+  --text-code-s:    400 12px/16px var(--font-mono);
+
+  /* Brand / marketing headings */
+  --text-brand-display: 500 64px/1.05 var(--font-brand);
+  --text-brand-h1:      500 48px/1.1  var(--font-brand);
+  --text-brand-h2:      500 32px/1.2  var(--font-brand);
+  --text-brand-body:    300 16px/1.55 var(--font-mono);
+
+  /* Letterspacing */
+  --tracking-tight: -0.02em;
+  --tracking-snug: -0.01em;
+}
+
+/* ==========================================================================
+   SEMANTIC ELEMENT STYLES (UI / product)
+   ========================================================================== */
+body {
+  font: var(--text-p);
+  color: var(--fg-1);
+  background: var(--bg-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1 { font: var(--text-h1); letter-spacing: var(--tracking-tight); color: var(--fg-1); margin: 0; }
+h2 { font: var(--text-h2); letter-spacing: var(--tracking-tight); color: var(--fg-1); margin: 0; }
+h3 { font: var(--text-h3); letter-spacing: var(--tracking-snug); color: var(--fg-1); margin: 0; }
+h4 { font: var(--text-h4); letter-spacing: var(--tracking-snug); color: var(--fg-1); margin: 0; }
+p  { font: var(--text-p); color: var(--fg-1); margin: 0; }
+small { font: var(--text-p-s); color: var(--fg-3); }
+code, pre, kbd { font-family: var(--font-mono); }
+
+/* Brand / marketing headings — use a .brand class wrapper */
+.brand h1, .brand .display { font: var(--text-brand-display); letter-spacing: var(--tracking-tight); }
+.brand h2 { font: var(--text-brand-h1); letter-spacing: var(--tracking-snug); }
+.brand h3 { font: var(--text-brand-h2); }
+.brand p, .brand .body { font: var(--text-brand-body); }

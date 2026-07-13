@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Enneo HR Ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/colors_and_type.css" />
+<link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="/assets/enneo-logo-light.svg" alt="Enneo" />
+    </div>
+    <div class="search">
+      <span class="i">⌕</span>
+      <input placeholder="Search" />
+    </div>
+    <nav class="nav">
+      <a href="#approvals" class="nav-item active" data-section="approvals">
+        <span class="i">✓</span> Approvals
+        <span class="badge" id="pending-badge" hidden>0</span>
+      </a>
+      <a href="#calendar-grid" class="nav-item" data-section="calendar-grid">
+        <span class="i">▦</span> Calendar
+      </a>
+      <a href="#awareness" class="nav-item" data-section="awareness">
+        <span class="i">◈</span> Holiday Alerts
+      </a>
+      <a href="#reports" class="nav-item" data-section="reports">
+        <span class="i">◔</span> Requests &amp; Reports
+      </a>
+      <a href="#team" class="nav-item" data-section="team">
+        <span class="i">☰</span> Team
+      </a>
+      <a href="#admin" class="nav-item admin-only" data-section="admin" hidden>
+        <span class="i">⚙</span> Admin
+      </a>
+    </nav>
+    <div class="signed-in-row">
+      <span id="signed-in-name">Signed in</span>
+      <button class="link-btn" id="logout-btn">Log out</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <h1 id="welcome">Welcome back</h1>
+        <p class="subdate" id="today"></p>
+      </div>
+      <div class="header-actions">
+        <button class="btn prim" id="request-off-btn">🌴 Request day off</button>
+        <button class="btn sec" id="generate-report">⭳ Generate report</button>
+      </div>
+    </header>
+
+    <section class="stat-grid stat-grid-3">
+      <div class="card stat">
+        <div class="stat-label">Team Members</div>
+        <div class="stat-value" id="stat-team">–</div>
+      </div>
+      <div class="card stat">
+        <div class="stat-label">Pending Approvals</div>
+        <div class="stat-value" id="stat-pending">–</div>
+      </div>
+      <div class="card stat">
+        <div class="stat-label">Out This Week</div>
+        <div class="stat-value" id="stat-out">–</div>
+      </div>
+    </section>
+
+    <section class="card panel" id="approvals">
+      <div class="panel-head">
+        <h3>Pending Approvals</h3>
+        <span class="hint" id="approvals-hint"></span>
+      </div>
+      <div id="approvals-list" class="request-list"></div>
+    </section>
+
+    <section class="card panel" id="calendar-grid">
+      <div class="panel-head">
+        <h3>Team Calendar</h3>
+        <div class="cal-nav">
+          <button class="btn small sec" id="cal-prev">‹</button>
+          <span id="cal-month-label"></span>
+          <button class="btn small sec" id="cal-next">›</button>
+          <button class="btn small sec" id="cal-today">Today</button>
+        </div>
+      </div>
+      <div class="cal-legend" id="cal-legend"></div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </section>
+
+    <section class="card panel" id="awareness">
+      <div class="panel-head">
+        <h3>Public Holidays — Who's Unavailable</h3>
+        <span class="hint">next 90 days · by location</span>
+      </div>
+      <div id="awareness-list" class="awareness-list"></div>
+    </section>
+
+    <section class="grid-2" id="team">
+      <div class="card panel">
+        <div class="panel-head">
+          <h3>Employees</h3>
+        </div>
+        <table class="table" id="employees-table">
+          <thead>
+            <tr><th>Name</th><th>Country</th><th>Team</th><th>Roles</th><th>Approver</th></tr>
+          </thead>
+          <tbody id="employees-body"></tbody>
+        </table>
+      </div>
+      <div class="card panel">
+        <div class="panel-head">
+          <h3>Countries</h3>
+          <button class="btn small sec admin-only" id="add-country-btn" hidden>+ Add country</button>
+        </div>
+        <div id="countries-list" class="holiday-list"></div>
+      </div>
+    </section>
+
+    <section class="card panel admin-only" id="admin" hidden>
+      <div class="panel-head">
+        <h3>Admin — Teams &amp; Roles</h3>
+        <div class="report-actions">
+          <button class="btn small sec" id="create-team-btn">+ Create team</button>
+          <button class="btn small sec" id="add-employee-btn">+ Add employee</button>
+        </div>
+      </div>
+
+      <h4 class="admin-sub">Teams</h4>
+      <div id="teams-list" class="teams-list"></div>
+
+      <h4 class="admin-sub">People &amp; roles</h4>
+      <table class="table" id="roles-table">
+        <thead>
+          <tr><th>Name</th><th>Admin</th><th>Approver</th><th>Team</th></tr>
+        </thead>
+        <tbody id="roles-body"></tbody>
+      </table>
+    </section>
+
+    <section class="card panel" id="reports">
+      <div class="panel-head">
+        <h3>Requests &amp; Reports</h3>
+        <div class="report-actions">
+          <select id="report-period">
+            <option value="month">This month</option>
+            <option value="quarter">This quarter</option>
+            <option value="year">This year</option>
+          </select>
+          <button class="btn small sec" id="download-report">⭳ Download CSV</button>
+        </div>
+      </div>
+      <table class="table" id="recent-table">
+        <thead>
+          <tr><th>Employee</th><th>Dates</th><th>Reason</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="recent-body"></tbody>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+<div class="modal-overlay" id="request-modal" hidden>
+  <form class="modal" id="request-form">
+    <h3>Request day off</h3>
+    <label>First day</label>
+    <input id="req-start" type="date" required />
+    <label>Last day</label>
+    <input id="req-end" type="date" required />
+    <label>Reason (optional)</label>
+    <input id="req-reason" placeholder="e.g. summer trip" />
+    <div class="modal-note" id="req-approver-note"></div>
+    <div class="modal-error" id="request-error" hidden></div>
+    <div class="modal-actions">
+      <button type="button" class="btn sec" data-close-modal="request-modal">Cancel</button>
+      <button type="submit" class="btn prim">Submit request</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal-overlay" id="source-modal" hidden>
+  <form class="modal" id="source-form">
+    <h3>Holiday source</h3>
+    <div class="modal-note" id="source-country-note"></div>
+    <label>Public-holiday resource URL</label>
+    <input id="source-url" type="url" placeholder="https://…" />
+    <div class="modal-error" id="source-error" hidden></div>
+    <div class="modal-actions">
+      <button type="button" class="btn sec" data-close-modal="source-modal">Cancel</button>
+      <button type="submit" class="btn prim">Save</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal-overlay" id="employee-modal" hidden>
+  <form class="modal" id="employee-form">
+    <h3>Add employee</h3>
+    <label>Name</label>
+    <input id="emp-name" required />
+    <label>Email</label>
+    <input id="emp-email" type="email" required />
+    <label>Password</label>
+    <input id="emp-password" type="text" value="enneo" required />
+    <label>Country</label>
+    <select id="emp-country" required></select>
+    <label>Team</label>
+    <select id="emp-team">
+      <option value="">— none —</option>
+    </select>
+    <label>Approver <span class="lbl-hint">(used if no team)</span></label>
+    <select id="emp-approver">
+      <option value="">— none —</option>
+    </select>
+    <div class="check-row">
+      <label class="check"><input type="checkbox" id="emp-is-approver" /> Approver role</label>
+      <label class="check"><input type="checkbox" id="emp-is-admin" /> Admin role</label>
+    </div>
+    <div class="modal-error" id="employee-error" hidden></div>
+    <div class="modal-actions">
+      <button type="button" class="btn sec" data-close-modal="employee-modal">Cancel</button>
+      <button type="submit" class="btn prim">Add employee</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal-overlay" id="team-modal" hidden>
+  <form class="modal" id="team-form">
+    <h3>Create team</h3>
+    <label>Team name</label>
+    <input id="team-name" required placeholder="e.g. Frontend" />
+    <label>Team lead (approver)</label>
+    <select id="team-lead">
+      <option value="">— none —</option>
+    </select>
+    <div class="modal-note">The team lead becomes the approver for everyone assigned to this team.</div>
+    <div class="modal-error" id="team-error" hidden></div>
+    <div class="modal-actions">
+      <button type="button" class="btn sec" data-close-modal="team-modal">Cancel</button>
+      <button type="submit" class="btn prim">Create team</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal-overlay" id="country-modal" hidden>
+  <form class="modal" id="country-form">
+    <h3>Add country</h3>
+    <label>Code (ISO-2, e.g. FR)</label>
+    <input id="country-code" maxlength="2" required style="text-transform:uppercase" />
+    <label>Name</label>
+    <input id="country-name" required />
+    <div class="modal-error" id="country-error" hidden></div>
+    <div class="modal-actions">
+      <button type="button" class="btn sec" data-close-modal="country-modal">Cancel</button>
+      <button type="submit" class="btn prim">Add country</button>
+    </div>
+  </form>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
